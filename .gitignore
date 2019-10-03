@@ -1,0 +1,12 @@
+# .gitignore
+__pycache__
+venv
+env
+.pytest_cache
+.coverage
+*.pyc
+*.avi
+*.png
+*.mp4
+*.csv
+
