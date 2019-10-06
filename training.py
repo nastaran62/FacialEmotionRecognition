@@ -8,10 +8,10 @@ from model import conv_model
 img_width, img_height = 48, 48
 BATCH_SIZE = 32
 CLASS_MODE = "sparse"
-training_images_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/preprocessed_data/training"
-validation_images_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/preprocessed_data/validation"
-training_csv_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/csv/training.csv"
-validation_csv_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/csv/validation.csv"
+training_images_path = "preprocessed_data/training"
+validation_images_path = "preprocessed_data/validation"
+training_csv_path = "csv/training.csv"
+validation_csv_path = "csv/validation.csv"
 EPOCHS = 100
 
 def training():
@@ -40,8 +40,7 @@ def training():
                                                  batch_size=BATCH_SIZE,
                                                  class_mode=CLASS_MODE,
                                                  shuffle=True,
-                                                 color_mode="grayscale",
-                                                 classes=[0, 1, 2, 3, 4, 5, 6])
+                                                 color_mode="grayscale")
 
     validation_data_generator = \
         ImageDataGenerator(rescale=1./255)
@@ -56,8 +55,7 @@ def training():
                                                       batch_size=BATCH_SIZE,
                                                       class_mode=CLASS_MODE,
                                                       shuffle=True,
-                                                      color_mode="grayscale",
-                                                      classes=[0, 1, 2, 3, 4, 5, 6])
+                                                      color_mode="grayscale")
 
 
 
@@ -65,12 +63,15 @@ def training():
     early = EarlyStopping(monitor='val_acc', min_delta=0, patience=10, verbose=1, mode='auto')
     tensorboard = TensorBoard(log_dir="logs/{}".format("model-{}".format(int(time.time()))))
 
-    row_count, col_count = train_data_frame.shape
+    train_data_count, col_count = train_data_frame.shape
+    validation_data_count, col_count = validation_data_frame.shape
     model.fit_generator(train_generator,
-                        steps_per_epoch=row_count // BATCH_SIZE,
+                        steps_per_epoch=train_data_count // BATCH_SIZE,
+                        validation_steps=validation_data_count // BATCH_SIZE,
                         epochs=EPOCHS,
                         validation_data=validation_generator,
-                        callbacks=[tensorboard, early, checkpoint])
+                        callbacks=[tensorboard, early, checkpoint],
+                        )
     model.save('models/model-{}.model'.format(int(time.time())))
 
 training()
