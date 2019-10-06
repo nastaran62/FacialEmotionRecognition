@@ -1,9 +1,11 @@
 #from tensorflow.keras.layers import Dense, Dropout, Flatten
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization
+#from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 #from keras.models import  Model
 from keras.models import Model, Sequential
-from keras.layers import Input, Convolution2D, ZeroPadding2D, MaxPooling2D, \
+from keras.layers import Input, Convolution2D, ZeroPadding2D, \
      Flatten, Dense, Dropout, Activation, BatchNormalization
+from keras.layers.convolutional import Conv2D
+from keras.layers.pooling import MaxPooling2D
 from keras import optimizers
 
 def model_2():
@@ -66,15 +68,15 @@ def model_2():
 
     return model
 
-def conv_model(input_shape=(48,48, 1)):
+def conv_model(input_shape=(48, 48, 1)):
     '''
     Base model was in the Kaggle
     '''
     # first input model
-    visible = Input(shape=input_shape, name='input')
+    input_layer = Input(shape=input_shape, name='input')
     num_classes = 7
     #the 1-st block
-    conv1_1 = Conv2D(64, kernel_size=3, activation='relu', padding='same', name = 'conv1_1')(visible)
+    conv1_1 = Conv2D(64, kernel_size=3, activation='relu', padding='same', name = 'conv1_1')(input_layer)
     conv1_1 = BatchNormalization()(conv1_1)
     conv1_2 = Conv2D(64, kernel_size=3, activation='relu', padding='same', name = 'conv1_2')(conv1_1)
     conv1_2 = BatchNormalization()(conv1_2)
@@ -132,7 +134,7 @@ def conv_model(input_shape=(48,48, 1)):
     ouput = Dense(num_classes, activation='softmax', name = 'output')(flatten)
 
     # create model
-    model = Model(inputs =visible, outputs = ouput)
+    model = Model(inputs =input_layer, outputs = ouput)
 
 
     # compile the model

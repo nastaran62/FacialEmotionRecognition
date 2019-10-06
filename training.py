@@ -8,10 +8,10 @@ from model import conv_model
 img_width, img_height = 48, 48
 BATCH_SIZE = 32
 CLASS_MODE = "sparse"
-training_images_path = "preprocessed_data/training"
-validation_images_path = "preprocessed_data/validation"
-training_csv_path = "csv/training.csv"
-validation_csv_path = "csv/validation.csv"
+training_images_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/preprocessed_data/training"
+validation_images_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/preprocessed_data/validation"
+training_csv_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/csv/training.csv"
+validation_csv_path = "/home/zsaf419/Documents/projects/FacialEmotionRecognition/FacialEmotionRecognition/csv/validation.csv"
 EPOCHS = 100
 
 def training():
@@ -33,6 +33,7 @@ def training():
     train_generator = \
         train_data_generator.flow_from_dataframe(dataframe=train_data_frame,
                                                  directory=training_images_path,
+                                                 validate_filenames=True,
                                                  x_col="file_name",
                                                  y_col="emotion",
                                                  target_size=(img_width, img_height),
@@ -48,6 +49,7 @@ def training():
     validation_generator = \
         validation_data_generator.flow_from_dataframe(dataframe=validation_data_frame,
                                                       directory=validation_images_path,
+                                                      validate_filenames=True,
                                                       x_col="file_name",
                                                       y_col="emotion",
                                                       target_size=(img_width, img_height),
