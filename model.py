@@ -1,8 +1,8 @@
 #from tensorflow.keras.layers import Dense, Dropout, Flatten
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization, MaxPooling2D, Flatten, Dense, Dropout, Activation
 #from keras.models import  Model
 from keras.models import Model, Sequential
-from keras.layers import Input, Convolution2D, ZeroPadding2D, MaxPooling2D, \
+from keras.layers import Input, Convolution2D, ZeroPadding2D,  \
      Flatten, Dense, Dropout, Activation, BatchNormalization
 from keras import optimizers
 
