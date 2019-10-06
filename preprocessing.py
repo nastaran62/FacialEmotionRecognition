@@ -17,13 +17,17 @@ def preprocessing(data_path, preprocessing_path, name):
     image_data_path = os.path.join(data_path, name)
     emotions = os.listdir(image_data_path)
     emotions.sort()
+    i =0 
     with open('csv/{}.csv'.format(name), 'w') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['file_name','emotion'])
         for emotion in emotions:
+            print(emotion)
             class_num = emotions.index(emotion)
             path = os.path.join(image_data_path, emotion)  # create path to emotions
             for img in os.listdir(path):
+                print(i)
+                i += 1
                 try:
                     # Convert image to gray scale, it seems that the color doesn't affect on the emotion
                     gray_image = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
@@ -40,12 +44,13 @@ def preprocessing(data_path, preprocessing_path, name):
                     # image normalization and scaling
                     normalized_image = normalization(preprocessed_image, WIDTH, HEIGHT)
                     #writing the preprocessed data
-                    file_name = "/p_{}".format(img)
+                    file_name = "p_{}".format(img)
                     csv_writer.writerow([file_name, class_num])
                     preprocessed_image_path = os.path.join(preprocessing_path, name)
-                    cv2.imwrite(preprocessed_image_path + file_name, normalized_image)
+                    cv2.imwrite(preprocessed_image_path + "/" + file_name, normalized_image)
                 except Exception as e:
                     print(e)
-preprocessing("dataset", "preprocessed_data", "training")
+print("Preprocessing test data")
+preprocessing("dataset", "preprocessed_data", "test")
 # Parameters that can be changed
 #   1- using detect_and_align_face instead of face_detection
