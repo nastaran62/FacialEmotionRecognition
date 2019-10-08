@@ -59,8 +59,8 @@ def training():
 
 
 
-    checkpoint = ModelCheckpoint('models/model-{}.h5'.format(int(time.time())), monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
-    early = EarlyStopping(monitor='val_acc', min_delta=0, patience=10, verbose=1, mode='auto')
+    checkpoint = ModelCheckpoint('models/model-{}.h5'.format(int(time.time())), monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
+    early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=10, verbose=1, mode='auto')
     tensorboard = TensorBoard(log_dir="logs/{}".format("model-{}".format(int(time.time()))))
 
     train_data_count, col_count = train_data_frame.shape
