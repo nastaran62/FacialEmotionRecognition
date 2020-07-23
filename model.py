@@ -71,6 +71,7 @@ def model_2():
 def conv_model(input_shape=(48, 48, 1)):
     '''
     Base model was in the Kaggle
+    https://www.kaggle.com/phamvanlinh143/fer-2013-notebook
     '''
     # first input model
     input_layer = Input(shape=input_shape, name='input')
